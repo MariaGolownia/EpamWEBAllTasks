@@ -11,12 +11,12 @@ public class TransportPlane extends Plane {
         areaOfCargoHatchSquareMeter = Optional.of(0);
     }
 
-    public TransportPlane(String modelOfPlane, Integer yearOfProduction, String producingCountry,
+    public TransportPlane(String modelOfPlane, String typeOfPlane, Integer yearOfProduction, String producingCountry,
                           String manufacturingCompany, Integer seatingCapacityUnit,
                           Integer carryingCapacityKilo, Integer fuelConsumptionKiloPerHour, Integer emptyWeightKilo,
                           Integer hoursOfFlightsHours, Integer volumeOfCargoCompartmentCubicMeter,
                           Integer areaOfCargoHatchSquareMeter) {
-        super(modelOfPlane, yearOfProduction, producingCountry, manufacturingCompany, seatingCapacityUnit, carryingCapacityKilo, fuelConsumptionKiloPerHour, emptyWeightKilo, hoursOfFlightsHours);
+        super(modelOfPlane, typeOfPlane, yearOfProduction, producingCountry, manufacturingCompany, seatingCapacityUnit, carryingCapacityKilo, fuelConsumptionKiloPerHour, emptyWeightKilo, hoursOfFlightsHours);
         setVolumeOfCargoCompartmentCubicMeter(volumeOfCargoCompartmentCubicMeter);
         setAreaOfCargoHatchSquareMeter(areaOfCargoHatchSquareMeter);
     }
@@ -37,9 +37,9 @@ public class TransportPlane extends Plane {
 
     @Override
     public String toString() {
-        return super.toString() + "TransportPlane{" +
-                "volumeOfCargoCompartmentCubicMeter=" + volumeOfCargoCompartmentCubicMeter +
-                ", areaOfCargoHatchSquareMeter=" + areaOfCargoHatchSquareMeter +
-                '}';
+        return super.toString() +
+                " volumeOfCargoCompartmentCubicMeter=" + volumeOfCargoCompartmentCubicMeter +
+                ",\n areaOfCargoHatchSquareMeter=" + areaOfCargoHatchSquareMeter +
+                "}";
     }
 }

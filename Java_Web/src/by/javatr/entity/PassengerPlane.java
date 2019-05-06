@@ -13,12 +13,12 @@ public class PassengerPlane extends Plane {
         numberOfBusinessClassSeats = Optional.of(0);
     }
 
-    public PassengerPlane(String modelOfPlane, Integer yearOfProduction, String producingCountry,
+    public PassengerPlane(String modelOfPlane, String typeOfPlane, Integer yearOfProduction, String producingCountry,
                           String manufacturingCompany, Integer seatingCapacityUnit,
                           Integer carryingCapacityKilo, Integer fuelConsumptionKiloPerHour, Integer emptyWeightKilo,
                           Integer hoursOfFlightsHours, Integer numberOfEconomyClassSeats, Boolean businessClassAvailability,
                           Integer numberOfBusinessClassSeats) {
-        super(modelOfPlane, yearOfProduction, producingCountry, manufacturingCompany, seatingCapacityUnit, carryingCapacityKilo, fuelConsumptionKiloPerHour, emptyWeightKilo, hoursOfFlightsHours);
+        super(modelOfPlane, typeOfPlane, yearOfProduction, producingCountry, manufacturingCompany, seatingCapacityUnit, carryingCapacityKilo, fuelConsumptionKiloPerHour, emptyWeightKilo, hoursOfFlightsHours);
        setNumberOfEconomyClassSeats(numberOfEconomyClassSeats);
        setBusinessClassAvailability(businessClassAvailability);
        setNumberOfBusinessClassSeats(numberOfBusinessClassSeats);
@@ -46,12 +46,13 @@ public class PassengerPlane extends Plane {
                     "'NumberOfBusinessClassSeats' parameter must be filled!");
     }
 
+
     @Override
     public String toString() {
-        return super.toString() + "PassengerPlane{" +
-                "numberOfEconomyClassSeats=" + numberOfEconomyClassSeats +
-                ", businessClassAvailability=" + businessClassAvailability +
-                ", numberOfBusinessClassSeats=" + numberOfBusinessClassSeats +
-                '}';
+        return super.toString() +
+                " numberOfEconomyClassSeats=" + numberOfEconomyClassSeats +
+                ",\n businessClassAvailability=" + businessClassAvailability +
+                ",\n numberOfBusinessClassSeats=" + numberOfBusinessClassSeats +
+                "}";
     }
 }

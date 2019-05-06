@@ -1,4 +1,3 @@
-
 package by.javatr.rep;
 import by.javatr.entity.PassengerPlane;
 import by.javatr.entity.Plane;
