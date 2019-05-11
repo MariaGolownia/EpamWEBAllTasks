@@ -1,19 +1,37 @@
 package by.javatr.entity;
 import java.util.Optional;
 
-public class PassengerPlane extends Plane {
+public class PassengerPlane extends Plane implements PlaneInterface{
     private Optional<Integer> numberOfEconomyClassSeats;             // Число мест эконом классса
     private Optional<Boolean> businessClassAvailability;             // Наличие бизнес класса
     private Optional<Integer> numberOfBusinessClassSeats;            // Число мест бизнесс класса
 
-    public PassengerPlane() {
+    public static PassengerPlaneFactory factory = new PassengerPlaneFactory() {
+        @Override
+        public PassengerPlane getPassengerPlane() {
+            return new PassengerPlane();
+        }
+
+        @Override
+        public PassengerPlane getPassengerPlane(String modelOfPlane, String typeOfPlane, Integer yearOfProduction, String producingCountry,
+                                       String manufacturingCompany, Integer seatingCapacityUnit,
+                                       Integer carryingCapacityKilo, Integer fuelConsumptionKiloPerHour, Integer emptyWeightKilo,
+                                       Integer hoursOfFlightsHours, Integer numberOfEconomyClassSeats, Boolean businessClassAvailability,
+                                       Integer numberOfBusinessClassSeats) {
+            return new PassengerPlane(modelOfPlane, typeOfPlane, yearOfProduction, producingCountry,manufacturingCompany,
+                    seatingCapacityUnit, carryingCapacityKilo, fuelConsumptionKiloPerHour, emptyWeightKilo,
+                    hoursOfFlightsHours, numberOfEconomyClassSeats, businessClassAvailability, numberOfBusinessClassSeats);
+        }
+    };
+
+    private PassengerPlane() {
         super();
         numberOfEconomyClassSeats = Optional.of(0);
         businessClassAvailability = Optional.of(false);
         numberOfBusinessClassSeats = Optional.of(0);
     }
 
-    public PassengerPlane(String modelOfPlane, String typeOfPlane, Integer yearOfProduction, String producingCountry,
+    private PassengerPlane(String modelOfPlane, String typeOfPlane, Integer yearOfProduction, String producingCountry,
                           String manufacturingCompany, Integer seatingCapacityUnit,
                           Integer carryingCapacityKilo, Integer fuelConsumptionKiloPerHour, Integer emptyWeightKilo,
                           Integer hoursOfFlightsHours, Integer numberOfEconomyClassSeats, Boolean businessClassAvailability,
@@ -46,6 +64,17 @@ public class PassengerPlane extends Plane {
                     "'NumberOfBusinessClassSeats' parameter must be filled!");
     }
 
+    public Integer getNumberOfEconomyClassSeats() {
+        return numberOfEconomyClassSeats.get();
+    }
+
+    public Boolean getBusinessClassAvailability() {
+        return businessClassAvailability.get();
+    }
+
+    public Integer getNumberOfBusinessClassSeats() {
+        return numberOfBusinessClassSeats.get();
+    }
 
     @Override
     public String toString() {

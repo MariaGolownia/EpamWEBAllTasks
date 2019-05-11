@@ -1,5 +1,9 @@
 package by.javatr.print;
 
+import by.javatr.entity.Plane;
+
+import java.util.List;
+
 public class PrintToConsole {
 
 	public static void print (String str)  {
@@ -29,5 +33,12 @@ public class PrintToConsole {
 	public static void println (Object obj)  {
 		System.out.println(" " + obj);
 	}
-	
+
+	public static void print (List<Plane> rezListSearchByModel) {
+		for (int i = 0; i < rezListSearchByModel.size(); i++) {
+			System.out.println(rezListSearchByModel.get(i));
+		}
+
+	}
+
 }

@@ -1,47 +1,58 @@
 package by.javatr.entity;
-
-import by.javatr.reader.ReaderPlanes;
-import by.javatr.util.AbstractCheckByTagForSearch;
+import by.javatr.util.AbstractTagForSearch;
+import by.javatr.util.IDAssignment;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Airline {
+public class Airline implements Cloneable {
+    private Integer digitToCountIDOfPlane = 0;
     List<Plane> listOfPlanes = new ArrayList<>();
 
+
     public void addPlane(Plane plane) {
+        plane.setIDOfPlane(IDAssignment.assign(this, plane, 0));
         listOfPlanes.add(plane);
     }
 
     public void addPlanes(Plane... plane) {
         for (int i = 1; i < plane.length; i++) {
+            plane[i].setIDOfPlane(IDAssignment.assign(this, plane[i], 0));
             listOfPlanes.add(plane[i]);
         }
     }
 
-    public void addPlanes(String repository) {
-        ReaderPlanes readerPlanes = new ReaderPlanes();
-        List<Plane> listOfPlanesTemp = readerPlanes.readearPlanesFromFile(repository);
-        if (listOfPlanes.size() == 0) {
-            listOfPlanes = listOfPlanesTemp;
-        } else {
-            listOfPlanes.addAll(listOfPlanesTemp);
-        }
-    }
 
     public Plane getPlaneByIndex(int index) {
         return listOfPlanes.get(index);
+    }
+
+    public List<Plane> getPlanes() {
+        return listOfPlanes;
     }
 
     public Integer getCountOfPlanes() {
         return listOfPlanes.size();
     }
 
-    public class Search {
+    public  void remove (Plane plane) {
+        for (int i = 0; i < listOfPlanes.size(); i++){
+            if (listOfPlanes.get(i).getIDOfPlane().equals(plane.getIDOfPlane())) {
+                listOfPlanes.remove(i);
+            }
+        }
+    }
 
-        public List<Plane> searchByTag(AbstractCheckByTagForSearch checkByTag, Object tagValue) {
+    public  void update (Plane plane) {
+        for (int i = 0; i < listOfPlanes.size(); i++)
+            if (listOfPlanes.get(i).getIDOfPlane().equals(plane.getIDOfPlane())) {
+                 listOfPlanes.set(i, plane);
+            }
+    }
+
+    public List<Plane> searchByTag(AbstractTagForSearch checkByTag, Object tagValue) {
             List<Plane> rezList = new ArrayList<>();
             for (Plane planeItem : listOfPlanes) {
                 if (checkByTag.ifContainsTag(planeItem, tagValue)) {
@@ -52,7 +63,7 @@ public class Airline {
         }
 
 
-        public List<Plane> searchByTagInRange(AbstractCheckByTagForSearch checkByTag, Object tagValue1, Object tagValue2) {
+        public List<Plane> searchByTagInRange(AbstractTagForSearch checkByTag, Object tagValue1, Object tagValue2) {
             List<Plane> rezList = new ArrayList<>();
             for (Plane planeItem : listOfPlanes) {
                 if (checkByTag.ifContainsTag(planeItem, tagValue1, tagValue2)) {
@@ -62,7 +73,14 @@ public class Airline {
             return rezList;
         }
 
-
+        public Integer getMaxIdOfPlanes() {
+        Integer maxIdOfPlanes = 0;
+        for (int i = 0; i < this.getCountOfPlanes(); i++) {
+            if (maxIdOfPlanes < this.getPlaneByIndex(i).getIDOfPlane()) {
+                maxIdOfPlanes = this.getPlaneByIndex(i).getIDOfPlane();
+            }
+        }
+        return  maxIdOfPlanes;
     }
 
     public void sort(Comparator<Plane> c) {listOfPlanes.sort(c);
@@ -70,5 +88,22 @@ public class Airline {
 
     public void sort() {
         Collections.sort(listOfPlanes);
+   }
+
+
+    @Override
+    public String toString() {
+        return "Airline{" +
+                "listOfPlanes=" + listOfPlanes +
+                '}';
+    }
+
+    public Airline clone()     {
+        Airline airlineClone = new Airline ();
+        for (int i = 0; i < this.getCountOfPlanes(); i++){
+            airlineClone.addPlane(this.getPlaneByIndex(i));
+            airlineClone.getPlaneByIndex(i).setIDOfPlane(this.getPlaneByIndex(i).getIDOfPlane());
+        }
+        return airlineClone;
     }
 }

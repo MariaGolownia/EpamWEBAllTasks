@@ -1,17 +1,34 @@
 package by.javatr.entity;
 import java.util.Optional;
 
-public class TransportPlane extends Plane {
+public class TransportPlane extends Plane implements PlaneInterface {
     private Optional<Integer> volumeOfCargoCompartmentCubicMeter;         // Объём грузового отсека транспортного самолёта
     private Optional<Integer> areaOfCargoHatchSquareMeter;                 // Площадь грузового люка транспортного самолёта
 
-    public TransportPlane() {
+    public static TransportPlaneFactory factory = new TransportPlaneFactory() {
+        @Override
+        public TransportPlane getTransportPlane() {
+            return new TransportPlane();
+        }
+
+        @Override
+        public TransportPlane getTransportPlane(String modelOfPlane, String typeOfPlane, Integer yearOfProduction, String producingCountry,
+                              String manufacturingCompany, Integer seatingCapacityUnit, Integer carryingCapacityKilo,
+                              Integer fuelConsumptionKiloPerHour, Integer emptyWeightKilo, Integer hoursOfFlightsHours,
+                              Integer volumeOfCargoCompartmentCubicMeter, Integer areaOfCargoHatchSquareMeter) {
+            return new TransportPlane(modelOfPlane, typeOfPlane, yearOfProduction, producingCountry,
+                    manufacturingCompany, seatingCapacityUnit, carryingCapacityKilo, fuelConsumptionKiloPerHour,
+                    emptyWeightKilo, hoursOfFlightsHours, volumeOfCargoCompartmentCubicMeter, areaOfCargoHatchSquareMeter);
+        }
+    };
+
+    private TransportPlane() {
         super();
         volumeOfCargoCompartmentCubicMeter = Optional.of(0);
         areaOfCargoHatchSquareMeter = Optional.of(0);
     }
 
-    public TransportPlane(String modelOfPlane, String typeOfPlane, Integer yearOfProduction, String producingCountry,
+    private TransportPlane(String modelOfPlane, String typeOfPlane, Integer yearOfProduction, String producingCountry,
                           String manufacturingCompany, Integer seatingCapacityUnit,
                           Integer carryingCapacityKilo, Integer fuelConsumptionKiloPerHour, Integer emptyWeightKilo,
                           Integer hoursOfFlightsHours, Integer volumeOfCargoCompartmentCubicMeter,
@@ -33,6 +50,14 @@ public class TransportPlane extends Plane {
         if (!this.areaOfCargoHatchSquareMeter.isPresent())
             System.out.println("Warning: not a valid value (null)!" +
                     "'AreaOfCargoHatchSquareMeter' parameter must be filled!");
+    }
+
+    public Integer getVolumeOfCargoCompartmentCubicMeter() {
+        return volumeOfCargoCompartmentCubicMeter.get();
+    }
+
+    public Integer getAreaOfCargoHatchSquareMeter() {
+        return areaOfCargoHatchSquareMeter.get();
     }
 
     @Override

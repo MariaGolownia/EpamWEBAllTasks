@@ -1,7 +1,8 @@
 package by.javatr.runner;
-
-import by.javatr.entity.Plane;
-import by.javatr.reader.ReaderPlanes;
+import by.javatr.entity.*;
+import by.javatr.print.PrintToConsole;
+import by.javatr.record.RecordAirlineToFile;
+import by.javatr.util.TagForSearch;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,29 +10,55 @@ import java.util.List;
 
 public class Runner {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        /*
-        Plane plane1 = new Plane("B737-300", 2019, "USA",
-               "BOEING", 250, 20000,2600,
-                32820, 1000);
-        System.out.println(plane1);
+        // Создание Plane без параметров(через Factory)
+        PrintToConsole.print("Создание Plane без параметров(через Factory)");
+        Plane plane1 = PlaneCreator.createPlane(Plane.factory);
+        System.out.println(plane1.toString());
 
-        Plane plane2 = new TransportPlane("E195AR", 1998, "BRAZIL",
+        // Создание Plane с параметрами(через Factory)
+        PrintToConsole.print("Создание Plane с параметрами(через Factory)");
+        Plane plane2 = PlaneCreator.createPlane(Plane.factory, "B737-300", "not defined", 2019, "USA",
+               "BOEING", 250, 20000,2600, 32820, 1000);
+        System.out.println(plane2.toString());
+
+        // Создание PassengerPlane с параметрами(через Factory)
+        PrintToConsole.print("Создание PassengerPlane с параметрами(через Factory)");
+        PassengerPlane plane3 = PlaneCreator.createPlane(PassengerPlane.factory,  "B737_300","passenger", 2019, "USA",
+                "BOEING", 250, 20000, 2600, 32820, 1000, 150, true, 20);
+        System.out.println(plane3.toString());
+
+        // Создание TransportPlane с параметрами(через Factory)
+        TransportPlane plane4 = PlaneCreator.createPlane(TransportPlane.factory, "E195AR", "transport",1998, "BRAZIL",
                 "EMBRAER", 200, 38000,3300, 37000, 30200, 170, 1200);
+        System.out.println(plane4.toString());
 
-        Plane plane3 = new TransportPlane("EMB-720 MINUANO", 1998, "BRAZIL",
-                "EMBRAER", 170, 34000,2700, 77000, 400000, 4300, 1100);
+        // Создание авиакомпании и осуществление добавления в нее самолетов
+        PrintToConsole.print("Создание авиакомпании и осуществление добавления в нее самолетов. Вывод на консоль всех самолетов созданной авиакомпании");
+        Airline airline1 = new Airline();
+        airline1.addPlane(plane1);
+        airline1.addPlane(plane2);
+        airline1.addPlane(plane3);
+        airline1.addPlane(plane4);
+        PrintToConsole.print(airline1.toString());
 
-        Plane plane4 = new PassengerPlane("B737_300", 2019, "USA", "BOEING", 250, 20000, 2600, 32820, 1000, 150, true, 20);
-        System.out.println(plane2);
-        System.out.println(plane3);
-        System.out.println(plane4);*/
+        // Поиск по тегу
+        PrintToConsole.print("Поиск по модели (B737_300)");
+        List<Plane> rezListSearchByModel = new ArrayList<>();
+        rezListSearchByModel = airline1.searchByTag(new TagForSearch.ModelTagForSearch(), "B737_300");
+        PrintToConsole.print(rezListSearchByModel);
 
-        ReaderPlanes reader = new ReaderPlanes();
+        // Поиск по тегу
+        PrintToConsole.print("Поиск по году (1998)");
+        List<Plane> rezListSearchByYear = new ArrayList<>();
+        rezListSearchByYear = airline1.searchByTag(new TagForSearch.YearTagForSearch(), 1998);
+        PrintToConsole.print(rezListSearchByYear);
 
-        List<Plane> arrayOfPlanes = new ArrayList<>();
-        arrayOfPlanes = reader.readearPlanesFromFile("data.txt");
-        System.out.println(arrayOfPlanes.toString());
+        try {
+            RecordAirlineToFile.record(airline1, "result.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
