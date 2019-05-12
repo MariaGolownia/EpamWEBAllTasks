@@ -1,7 +1,6 @@
 package by.javatr.entity;
 import by.javatr.util.AbstractTagForSearch;
 import by.javatr.util.IDAssignment;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,7 +22,6 @@ public class Airline implements Cloneable {
             listOfPlanes.add(plane[i]);
         }
     }
-
 
     public Plane getPlaneByIndex(int index) {
         return listOfPlanes.get(index);
@@ -52,7 +50,7 @@ public class Airline implements Cloneable {
             }
     }
 
-    public List<Plane> searchByTag(AbstractTagForSearch checkByTag, Object tagValue) {
+    public List<Plane> searchByTag(AbstractTagForSearch checkByTag, String tagValue) {
             List<Plane> rezList = new ArrayList<>();
             for (Plane planeItem : listOfPlanes) {
                 if (checkByTag.ifContainsTag(planeItem, tagValue)) {
@@ -63,7 +61,7 @@ public class Airline implements Cloneable {
         }
 
 
-        public List<Plane> searchByTagInRange(AbstractTagForSearch checkByTag, Object tagValue1, Object tagValue2) {
+        public List<Plane> searchByTagInRange(AbstractTagForSearch checkByTag, String tagValue1, String tagValue2) {
             List<Plane> rezList = new ArrayList<>();
             for (Plane planeItem : listOfPlanes) {
                 if (checkByTag.ifContainsTag(planeItem, tagValue1, tagValue2)) {
